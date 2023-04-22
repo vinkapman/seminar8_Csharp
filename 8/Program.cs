@@ -18,80 +18,84 @@
 
 8 4 4 2
 
-*/
-
 internal class Program
 
 {
 
-    private static void Main(string[] table)
+    private static void Main(string[] myArraySort)
 
     {
-        static int[,] GenerateArray(int rows, int cols)
-        {
-            int[,] table = new int[rows, cols]; // инициализация двумерного массива случайными числами
-            Random random = new Random();
-            for (int a = 0; a < rows; a++)
-            {
-                for (int b = 0; b < cols; b++)
-                {
-                    table[a, b] = random.Next(0, 9);
-                }
-            }
-            for (int i = 0; i < table.GetLength(0); i++) // перебор сток массива
-            {
-                for (int j = 0; j < table.GetLength(1); j++) // перебор столбцов массива
-                {
-                    Console.Write(table[i, j] + "\t"); // печать массива
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine("Сортировка по строкам: ");
-            for (int i = 0; i < table.GetLength(0); i++) // перебор строк массива
-            {
-                for (int j = 0; j < table.GetLength(1); j++) // перебор столбцов массива
-                {
-                    int temp;
-                    for (int k = j+1; k < table.GetLength(1); k++) // цикл нахождения максимума
-                    {
-                        if (table[i, j] < table[i, k])
-                        {
-                           
-                            temp = table[i,j];
-                            table[i,j] = table[i, k];
-                            table[i, k] = temp;
-                        }
-                      
-                    }
-                  
-                }
-            }
 
-            for (int i = 0; i < table.GetLength(0); i++) // перебор сток массива
+       
+
+
+        int[,] GenerateArray(int rows, int columns)
+        {
+            int[,] rndArray = new int[rows, columns];
+            var rand = new Random();
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < table.GetLength(1); j++) // перебор столбцов массива
+                for (int j = 0; j < columns; j++)
                 {
-                    Console.Write(table[i, j] + "\t"); // печать массива
+                    rndArray[i, j] = rand.Next(2, 10);
                 }
-                Console.WriteLine();
             }
-            return table;
+            return rndArray;
         }
 
+        void PrintArray(int[,] array)
+            {
+                for (int i = 0; i < array.GetLength(0); i++) // перебор сток массива
+                {
+                    for (int j = 0; j < array.GetLength(1); j++) // перебор столбцов массива
+                    {
+                        Console.Write(array[i, j] + "\t"); // печать массива
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+        void SortArray(int[,] table)
+            {
+                Console.WriteLine("Сортировка по строкам: ");
+                for (int i = 0; i < table.GetLength(0); i++) // перебор строк массива
+                {
+                    for (int j = 0; j < table.GetLength(1); j++) // перебор столбцов массива
+                    {
+                        int temp;
+                        for (int k = j+1; k < table.GetLength(1); k++) // цикл нахождения максимума
+                        {
+                            if (table[i, j] < table[i, k])
+                            {
+                                temp = table[i,j];
+                                table[i,j] = table[i, k];
+                                table[i, k] = temp;
+                            }
+                        } 
+                    }
+                }
+
+                
+        }
+
+        Console.Clear();
         Console.WriteLine("Введите количество строк:");
         int m = Convert.ToInt32(Console.ReadLine());
         Console.WriteLine("Введите количество столбцов:");
         int n = Convert.ToInt32(Console.ReadLine());
-
-        GenerateArray(m, n);
+        int[,] myArray = GenerateArray(m, n);
+        PrintArray(myArray);
+        Console.WriteLine();
+        SortArray(myArray);
+        PrintArray(myArray);
+        Console.WriteLine();
 
     }
 
 }
 
-/*
-
-Задача 56: Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.
+Задача 56: Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить 
+строку с наименьшей суммой элементов.
 
 Например, задан массив:
 
@@ -103,8 +107,85 @@ internal class Program
 
 5 2 6 7
 
-Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: 1 строка
+Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой 
+элементов: 1 строка
+*/
 
+internal class Program
+
+{
+
+    private static void Main(string[] minStrokaArray)
+
+    {
+        int[,] GenerateArray(int rows, int columns)
+        {
+            int[,] rndArray = new int[rows, columns];
+            var rand = new Random();
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    rndArray[i, j] = rand.Next(2, 10);
+                }
+            }
+            return rndArray;
+        }
+
+        void PrintArray(int[,] array)
+            {
+                for (int i = 0; i < array.GetLength(0); i++) // перебор сток массива
+                {
+                    for (int j = 0; j < array.GetLength(1); j++) // перебор столбцов массива
+                    {
+                        Console.Write(array[i, j] + "\t"); // печать массива
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+        int MinStrokaArray(int[,] table)
+            {
+                Console.WriteLine("номер строки с наименьшей суммой элементов: ");
+                int[] minStroka = new int[table.GetLength(0)];
+                for (int i = 0; i < table.GetLength(0); i++) // перебор строк массива
+                {
+                    minStroka[i] = 0;
+                    for (int j = 0; j < table.GetLength(1); j++) // перебор элементов строки
+                    {
+                        minStroka[i] = minStroka[i] + table[i, j]; // сумма элементов строки i
+                    } 
+                }
+                int min = minStroka[0];
+                int indexStroka = 0;
+                for (int k=0; k < minStroka.Length - 1; k++)
+                {
+                    if (minStroka[k] < min)
+                    {
+                        min = minStroka[k];
+                        indexStroka = k;
+                    }
+                }
+                Console.WriteLine(indexStroka+1);
+                return indexStroka;
+            }
+        
+        Console.Clear();
+        Console.WriteLine("Введите количество строк:");
+        int m = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите количество столбцов:");
+        int n = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine();
+        int[,] myArray = GenerateArray(m, n);
+        PrintArray(myArray);
+        Console.WriteLine();
+        MinStrokaArray(myArray);
+
+    }
+
+}
+
+/*
 Задача 58: Задайте две матрицы. Напишите программу, которая будет находить произведение двух матриц.
 
 Например, даны 2 матрицы:
