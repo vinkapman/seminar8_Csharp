@@ -294,7 +294,6 @@ internal class Program
 27(0,0,1) 90(0,1,1)
 26(1,0,1) 55(1,1,1)
 
-*/
 
 internal class Program
 
@@ -364,7 +363,7 @@ internal class Program
 
 }
 
-/*
+
 Задача 62. Напишите программу, которая заполнит спирально массив . Размер вводит юзер
 Например, на выходе получается вот такой массив:
 
@@ -374,3 +373,56 @@ internal class Program
 10 09 08 07
 
 */
+
+internal class Program
+
+{
+
+    private static void Main(string[] spiralArrays)
+
+    {
+
+        void PrintArray(int[,] array)
+            {
+                for (int i = 0; i < array.GetLength(0); i++) // перебор сток массива
+                {
+                    for (int j = 0; j < array.GetLength(1); j++) // перебор столбцов массива
+                    {
+                        Console.Write(array[i, j] + "\t"); // печать массива
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+        int[,] SpiralArray(int rows)
+            {
+                int columns = rows;
+                int[,] array = new int[rows, columns];
+                int num = 1;
+                int i = 0;
+                int j = 0;
+
+                while (num <= rows * columns)
+                {
+                    array[i, j] = num;
+                    if (i <= j + 1 && i + j < columns - 1)
+                        ++j;
+                    else if (i < j && i + j >= rows - 1)
+                        ++i;
+                    else if (i >= j && i + j > columns - 1)
+                        --j;
+                    else
+                        --i;
+                    ++num;
+                }
+              
+                return array;
+            }
+        
+        Console.Clear();
+        Console.WriteLine("Введите размер массива:");
+        int m = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine();
+        PrintArray(SpiralArray(m)); 
+    }
+}

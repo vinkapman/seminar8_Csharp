@@ -5,74 +5,65 @@
     private static void Main(string[] table)
 
     {
+        /* Задача 62. Напишите программу, которая заполнит спирально массив . Размер вводит юзер
+Например, на выходе получается вот такой массив:
+01 02 03 04
+12 13 14 05
+11 16 15 06
+10 09 08 07 */
+
 Start();
 void Start()
 {
-    Console.Clear();
-    int rows = SetNumber("rows");
-    int columns = SetNumber("columns");
-    int min = SetNumber("min");
-    int max = SetNumber("max");
-    Console.WriteLine();
-    int[,] matrix = GetRandomMatrix(rows, columns, min, max);
-    PrintMatrix(matrix);
-    Console.WriteLine();
-    SortArray(matrix);
-    PrintMatrix(matrix);
-    
-}
-
-int SetNumber(string text = "")
-{
-    Console.Write($"Enter number {text}: ");
-    int num = Convert.ToInt32(Console.ReadLine());
-    return num;
-}
-int[,] GetRandomMatrix(int rows, int columns, int min, int max)
-{
-    int[,] array = new int[rows, columns];
-    var rand = new Random();
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < columns; j++)
-        {
-            array[i, j] = rand.Next(min, max + 1);
+            Console.Clear();
+            int rows = SetNumber("rows");
+            int columns = rows;
+            Console.WriteLine();
+            int[,] matrix = GetSpiralMatrix(rows, columns);
+            PrintMatrix(matrix);
+            Console.WriteLine();
+            Console.WriteLine();
         }
-    }
-    return array;
-}
-void PrintMatrix(int[,] matrix)
-{
-    for (int i = 0; i < matrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < matrix.GetLongLength(1); j++)
+
+        int SetNumber(string text = "")
         {
-            Console.Write($"{matrix[i, j]}   ");
+            Console.Write($"Enter number {text}: ");
+            int num = Convert.ToInt32(Console.ReadLine());
+            return num;
         }
-        Console.WriteLine();
-    }
-}
-
-void SortArray(int[,] array)
-{
-
-    int tmp;
-    for (int i = 0; i < array.GetLength(0); i++)
-    {
-
-        for (int j = 0; j < array.GetLength(1); j++)
+        int[,] GetSpiralMatrix(int rows, int columns)
         {
-            for (int k = j + 1; k < array.GetLength(1); k++)
+            int[,] array = new int[rows, columns];
+            int num = 1;
+            int i = 0;
+            int j = 0;
+
+            while (num <= rows * columns)
             {
-                if (array[i, j] < array[i, k])
+                array[i, j] = num;
+                if (i <= j + 1 && i + j < columns - 1)
+                    ++j;
+                else if (i < j && i + j >= rows - 1)
+                    ++i;
+                else if (i >= j && i + j > columns - 1)
+                    --j;
+                else
+                    --i;
+                ++num;
+            }
+
+            return array;
+        }
+        void PrintMatrix(int[,] matrix)
+        {
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLongLength(1); j++)
                 {
-                    tmp = array[i, j];
-                    array[i, j] = array[i, k];
-                    array[i, k] = tmp;
+                    Console.Write($" {matrix[i, j]:D2} ");
                 }
+                Console.WriteLine();
             }
         }
     }
-}
-}
 }
