@@ -109,7 +109,7 @@ internal class Program
 
 Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой 
 элементов: 1 строка
-*/
+
 
 internal class Program
 
@@ -185,9 +185,8 @@ internal class Program
 
 }
 
-/*
-Задача 58: Задайте две матрицы. Напишите программу, которая будет находить произведение двух матриц.
-
+Задача 58: Задайте две матрицы. 
+Напишите программу, которая будет находить произведение двух матриц.
 Например, даны 2 матрицы:
 
 2 4 | 3 4
@@ -200,28 +199,178 @@ internal class Program
 
 15 18
 
-Задача 60. ...Сформируйте трёхмерный массив из неповторяющихся двузначных чисел. Напишите программу, которая будет построчно выводить массив, добавляя индексы каждого элемента.
+
+internal class Program
+
+{
+
+    private static void Main(string[] ProizArray)
+
+    {
+        int[,] GenerateArray(int rows, int columns)
+        {
+            
+            int[,] rndArray = new int[rows, columns];
+            var rand = new Random();
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    rndArray[i, j] = rand.Next(2, 10);
+                }
+            }
+            return rndArray;
+        }
+
+        void PrintArray(int[,] array)
+            {
+                for (int i = 0; i < array.GetLength(0); i++) // перебор сток массива
+                {
+                    for (int j = 0; j < array.GetLength(1); j++) // перебор столбцов массива
+                    {
+                        Console.Write(array[i, j] + "\t"); // печать массива
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+        int[,] ProizArray(int[,] tableOne, int[,] tableTwo)
+            {
+                Console.WriteLine("Произведение массивов:");
+                var proizTable = new int[tableOne.GetLength(0), tableTwo.GetLength(1)]; // задали размер матрицы после произведения
+                for (int i = 0; i < proizTable.GetLength(0); i++) // перебор строк массива
+                {
+                    for (int j = 0; j < proizTable.GetLength(1); j++) // перебор элементов строки
+                    {
+                       proizTable[i, j] = 0;
+                       for (int k = 0; k < tableOne.GetLength(1); k++)
+                       {
+                            proizTable[i, j] += tableOne[i, k] * tableTwo[k, j];
+                       }
+                    } 
+                }
+              
+                return proizTable;
+            }
+        
+        Console.Clear();
+        Console.WriteLine("Введите количество строк первого массива:");
+        int m1 = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите количество столбцов первого массива:");
+        int n1 = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine();
+        Console.WriteLine("Введите количество строк второго массива:");
+        int m2 = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите количество столбцов второго массива:");
+        int n2 = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine();
+        int[,] myArrayOne = GenerateArray(m1, n1);
+        int[,] myArrayTwo = GenerateArray(m2, n2);
+        PrintArray(myArrayOne);
+        Console.WriteLine();
+        PrintArray(myArrayTwo);
+        Console.WriteLine();
+        if (n1 != m2)
+            {
+                Console.WriteLine("Умножение невозможно");
+            }
+        else
+            {
+                int[,] myArrayThree = ProizArray(myArrayOne, myArrayTwo);
+                PrintArray(myArrayThree); 
+            }
+    }
+}
+
+
+
+Задача 60. ...Сформируйте трёхмерный массив из неповторяющихся двузначных чисел. 
+Напишите программу, которая будет построчно выводить массив, добавляя индексы каждого элемента.
 
 Массив размером 2 x 2 x 2
 
 66(0,0,0) 25(0,1,0)
-
 34(1,0,0) 41(1,1,0)
-
 27(0,0,1) 90(0,1,1)
-
 26(1,0,1) 55(1,1,1)
 
-Задача 62. Напишите программу, которая заполнит спирально массив . Размер вводит юзер
+*/
 
+internal class Program
+
+{
+
+    private static void Main(string[] ThreeSizeArray)
+
+    {
+        int[,,] GenerateArray(int rows, int columns, int pages)
+            {
+                int[,,] array = new int[rows, columns, pages];
+                int count = 10;
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        for (int k = 0; k < pages; k++)
+                        {
+                            array[k, i, j] = count;
+                            count += 1;
+                        }
+                    }
+                }
+                return array;
+            }
+
+        void PrintArray(int[,] array)
+            {
+                for (int i = 0; i < array.GetLength(0); i++) // перебор сток массива
+                {
+                    for (int j = 0; j < array.GetLength(1); j++) // перебор столбцов массива
+                    {
+                        Console.Write(array[i, j] + "\t"); // печать массива
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+        void PrintIndex(int[,,] array)
+            {
+                for (int i = 0; i < array.GetLength(0); i++)
+                {
+                    for (int j = 0; j < array.GetLength(1); j++)
+                    {
+                        Console.WriteLine();
+                        for (int k = 0; k < array.GetLength(2); k++)
+                        {
+                            Console.Write($"{array[i, j, k]}({i},{j},{k}) ");
+                        }
+                    }
+                }
+            }
+        
+        Console.Clear();
+        Console.WriteLine("Введите индекс 1 массива:");
+        int rows = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите индекс 2 массива:");
+        int columns = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Введите индекс 3 массива:");
+        int pages = Convert.ToInt32(Console.ReadLine());
+        int[,,] matrix = GenerateArray(rows, columns, pages);
+        PrintIndex(matrix);
+        Console.WriteLine();
+        Console.WriteLine();
+
+    }
+
+}
+
+/*
+Задача 62. Напишите программу, которая заполнит спирально массив . Размер вводит юзер
 Например, на выходе получается вот такой массив:
 
 01 02 03 04
-
 12 13 14 05
-
 11 16 15 06
-
 10 09 08 07
 
 */
